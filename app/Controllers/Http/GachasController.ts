@@ -13,7 +13,7 @@ export default class GachasController {
     const address = payload.address
 
     const historyRecords = await DrawGachaHistory.query().where(
-      'address',
+      'drawler',
       address,
     )
 

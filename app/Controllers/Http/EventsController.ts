@@ -10,6 +10,7 @@ import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import WebhookLog from 'App/Models/WebhookLog'
 import DrawGachaHistory from 'App/Models/DrawGachaHistory'
 import { DateTime } from 'luxon'
+import { normalizeAddress } from 'App/Utils/blockchain'
 
 export default class EventsController {
   public async processEvent({
@@ -47,6 +48,8 @@ export default class EventsController {
       txHash: data.txHash,
     })
 
+    console.log(data.event, 'event')
+
     switch (data.event) {
       case 'DrawGacha':
         await this.handleDrawGacha(data)
@@ -74,9 +77,10 @@ export default class EventsController {
   private async handleDrawGacha(
     data: WebhookEvent<'DrawGacha', DrawGachaData>,
   ) {
+    console.log(data.params, 'params')
     const { params, blockTime } = data
     await DrawGachaHistory.create({
-      drawler: params.drawler,
+      drawler: normalizeAddress(params.drawler),
       amount: params.amount,
       itemType: params.itemType,
       drawTime: DateTime.fromMillis(parseInt(blockTime) * 1000),

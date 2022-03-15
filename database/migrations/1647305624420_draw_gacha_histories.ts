@@ -9,7 +9,7 @@ export default class DrawGachaHistories extends BaseSchema {
       table.string('drawler')
       table.string('amount')
       table.string('item_type')
-      table.timestamp('craw_time')
+      table.timestamp('draw_time')
 
       /**
        * Uses timestamptz for PostgreSQL and DATETIME2 for MSSQL
