@@ -17,7 +17,7 @@ export default class GachasController {
       'drawler',
       normalizeAddress(address),
     )
-    s
+
     if (!historyRecords.length) {
       return response.notFound({
         statusCode: 404,
