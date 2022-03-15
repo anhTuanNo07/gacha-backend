@@ -1,6 +1,7 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import DrawGachaHistory from 'App/Models/DrawGachaHistory'
 import { gachaValidator } from 'App/Schema/GachaValidator'
+import { normalizeAddress } from 'App/Utils/blockchain'
 
 export default class GachasController {
   public async getDrawHistory({ request, response }: HttpContextContract) {
@@ -14,9 +15,9 @@ export default class GachasController {
 
     const historyRecords = await DrawGachaHistory.query().where(
       'drawler',
-      address,
+      normalizeAddress(address),
     )
-
+    s
     if (!historyRecords.length) {
       return response.notFound({
         statusCode: 404,
