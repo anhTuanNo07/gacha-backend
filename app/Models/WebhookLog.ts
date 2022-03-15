@@ -20,6 +20,9 @@ export default class WebhookLog extends BaseModel {
   @column()
   public txHash: string
 
+  @column()
+  public logIndex: string
+
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
 

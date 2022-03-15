@@ -9,10 +9,10 @@ export default class DrawGachaHistory extends BaseModel {
   public drawler: string
 
   @column()
-  public amount: string
+  public amount: number
 
   @column()
-  public itemType: string
+  public itemType: number
 
   @column()
   public drawTime: DateTime

@@ -1,6 +1,6 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import DrawGachaHistory from 'App/Models/DrawGachaHistory'
-import { gachaValidator } from 'App/Schema/GachaValidator'
+import { gachaValidator, paginateValidator } from 'App/Schema/GachaValidator'
 import { normalizeAddress } from 'App/Utils/blockchain'
 
 export default class GachasController {
@@ -11,18 +11,22 @@ export default class GachasController {
       data: request.params(),
     })
 
+    const { page, limit } = await request.validate({
+      schema: paginateValidator,
+      data: request.all(),
+    })
+
     const address = payload.address
 
-    const historyRecords = await DrawGachaHistory.query().where(
+    let rawQuery = DrawGachaHistory.query().where(
       'drawler',
       normalizeAddress(address),
     )
 
-    if (!historyRecords.length) {
-      return response.notFound({
-        statusCode: 404,
-        message: 'have not already drawn gacha',
-      })
+    let historyRecords = await rawQuery
+
+    if (page && limit) {
+      historyRecords = await rawQuery.paginate(page, limit)
     }
 
     response.ok({

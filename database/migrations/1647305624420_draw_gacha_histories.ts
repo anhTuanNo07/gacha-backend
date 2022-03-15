@@ -7,8 +7,8 @@ export default class DrawGachaHistories extends BaseSchema {
     this.schema.createTable(this.tableName, (table) => {
       table.increments('id')
       table.string('drawler')
-      table.string('amount')
-      table.string('item_type')
+      table.integer('amount')
+      table.integer('item_type')
       table.timestamp('draw_time')
 
       /**

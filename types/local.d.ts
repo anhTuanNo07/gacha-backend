@@ -8,6 +8,7 @@ export interface WebhookEvent<
   blockNumber: number
   blockTime: string
   txIndex: number
+  logIndex: number
   from: string
   to: string
 }

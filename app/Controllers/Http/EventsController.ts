@@ -27,11 +27,15 @@ export default class EventsController {
       'blockNumber',
       'blockTime',
       'txIndex',
+      'logIndex',
       'from',
       'to',
     ]) as UnifiedWebhookEvent
 
-    let webhookLog = await WebhookLog.findBy('txHash', data.txHash)
+    let webhookLog = await WebhookLog.query()
+      .where('tx_hash', data.txHash)
+      .andWhere('log_index', data.logIndex.toString())
+      .first()
     if (webhookLog) {
       logger.info(
         `This event has already been processed! ${JSON.stringify(data)}`,
@@ -46,6 +50,7 @@ export default class EventsController {
     webhookLog = await WebhookLog.create({
       data: JSON.stringify(data),
       txHash: data.txHash,
+      logIndex: data.logIndex.toString(),
     })
 
     console.log(data.event, 'event')
@@ -81,8 +86,8 @@ export default class EventsController {
     const { params, blockTime } = data
     await DrawGachaHistory.create({
       drawler: normalizeAddress(params.drawler),
-      amount: params.amount,
-      itemType: params.itemType,
+      amount: parseInt(params.amount),
+      itemType: parseInt(params.itemType),
       drawTime: DateTime.fromMillis(parseInt(blockTime) * 1000),
     })
   }
