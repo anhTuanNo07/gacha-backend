@@ -11,7 +11,7 @@ export default class GachasController {
       data: request.params(),
     })
 
-    const { page, limit } = await request.validate({
+    const { page, limit, sort } = await request.validate({
       schema: paginateValidator,
       data: request.all(),
     })
@@ -22,6 +22,11 @@ export default class GachasController {
       'drawler',
       normalizeAddress(address),
     )
+    if (sort === 'asc' || sort === 'desc') {
+      rawQuery = rawQuery.orderBy('draw_time', sort)
+    }
+
+    rawQuery = rawQuery.orderBy('draw_time', 'desc')
 
     let historyRecords = await rawQuery
 

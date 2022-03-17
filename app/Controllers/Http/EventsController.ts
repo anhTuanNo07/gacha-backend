@@ -1,7 +1,7 @@
 import {
   WebhookEvent,
   DrawGachaData,
-  CraftGachaData,
+  // CraftGachaData,
 } from './../../../types/local.d'
 
 import { WebhookProcessStatus } from './../../Models/WebhookLog'
@@ -60,9 +60,9 @@ export default class EventsController {
         await this.handleDrawGacha(data)
         break
 
-      case 'CraftGacha':
-        await this.handleCraftGacha(data)
-        break
+      // case 'CraftGacha':
+      //   await this.handleCraftGacha(data)
+      //   break
 
       default:
         return response.badRequest({
@@ -92,11 +92,11 @@ export default class EventsController {
     })
   }
 
-  private async handleCraftGacha(
-    data: WebhookEvent<'CraftGacha', CraftGachaData>,
-  ) {
-    const { params } = data
+  // private async handleCraftGacha(
+  //   data: WebhookEvent<'CraftGacha', CraftGachaData>,
+  // ) {
+  //   // const { params } = data
 
-    // handle craft gacha goes here...
-  }
+  //   // handle craft gacha goes here...
+  // }
 }

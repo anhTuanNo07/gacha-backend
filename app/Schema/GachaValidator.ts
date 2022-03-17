@@ -7,6 +7,7 @@ const gachaBackend = {
 const paginate = {
   page: schema.number.nullableAndOptional(),
   limit: schema.number.nullableAndOptional(),
+  sort: schema.string.nullableAndOptional(),
 }
 
 export const gachaValidator = schema.create(gachaBackend)
